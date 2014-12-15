@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    h1= title
+
+    .form-inline
+        .form-group
+            label.sr-only(for="first_name") First Name
+            input.form-control(type="text", id="first_name", placeholder="First Name")
+        .form-group
+            label.sr-only(for="last_name") Last Name
+            input.form-control(type="text", id="last_name", placeholder="Last Name")
+            label.sr-only
+
+    h2 Key
+    button.btn.btn-primary Available shift
+    |&nbsp;
+    button.btn.btn-warning Only 1 more shift available at this time
+    |&nbsp;
+    button.btn.disabled.btn-danger This shift is no longer available
+
+    .row.days
+        each day in days
+            .col-lg-1.col-md-2.col-sm-2.col-xs-4
+                h2= day
+                each shift in shifts
+                    - id = day + shift
+                    - shift = shift + ' - ' + ((shift + 4 > 12) ? shift - 8 : shift + 4)
+                    label.btn.btn-primary
+                        input(type='radio', name='shift', id='#{id}', value='#{id}')
+                        |&nbsp;#{shift}
+
+    .notifier.bg-info(style='display:none')
+        p You've selected this shift: <span></span>
+        button.btn.btn-primary.submit Submit
+
+    .modal(style='display:none')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h1.modal-title Confirmed
+                .modal-body
+                    p We have received your request for:
+                    h2 <span></span>
+                    p We will be in touch to confirm.
+        

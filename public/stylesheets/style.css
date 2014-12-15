@@ -1,0 +1,28 @@
+
+.row .btn {
+    width: 100%;
+    display: block;
+    margin-bottom: .5em;
+}
+
+.days input {
+    display: none;
+}
+
+.notifier {
+    position: fixed;
+    width: 300px;
+    top: 0;
+    left: 50%;
+    margin-left: -150px;
+    text-align: center;
+    padding: 1em;
+    box-shadow: 0 0 10px -2px black;
+    border-radius: 0 0 1em 1em;
+}
+
+.notifier span {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}

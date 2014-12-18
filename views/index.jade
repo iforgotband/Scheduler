@@ -3,16 +3,7 @@ extends layout
 block content
     h1= title
 
-    .form-inline
-        .form-group
-            label.sr-only(for="first_name") First Name
-            input.form-control(type="text", id="first_name", placeholder="First Name")
-        .form-group
-            label.sr-only(for="last_name") Last Name
-            input.form-control(type="text", id="last_name", placeholder="Last Name")
-            label.sr-only
-
-    h2 Key
+        h2 Key
     button.btn.btn-primary Available shift
     |&nbsp;
     button.btn.btn-warning Only 1 more shift available at this time
@@ -32,6 +23,15 @@ block content
 
     .notifier.bg-info(style='display:none')
         p You've selected this shift: <span></span>
+        .form-inline
+            .form-group
+                label.sr-only(for="first_name") First Name
+                input.form-control(type="text", id="first_name", placeholder="First Name")
+            .form-group
+                label.sr-only(for="last_name") Last Name
+                input.form-control(type="text", id="last_name", placeholder="Last Name")
+                label.sr-only
+
         button.btn.btn-primary.submit Submit
 
     .modal(style='display:none')

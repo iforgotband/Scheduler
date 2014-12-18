@@ -28,10 +28,27 @@ router.post('/', function (req, res) {
                 var day = req.body.shift.substring(0, 3);
                 var time = req.body.shift.substring(3);
 
-                stmt = db.prepare('UPDATE supervisor_hours SET cg = cg - 1 WHERE day=? AND hour=?');
+                var checkAvail = db.prepare('SELECT * FROM supervisor_hours WHERE day=? AND hour=?');
+                var center = null;
+
                 for (var i = 0; i < 4; i++) {
                     var t = (time + i > 12) ? 12 - time + i : time + i;
-                    stmt.run(day, t);
+
+                    checkAvail.get(day, t, function (err, doc) {
+                        if (doc == undefined) return;
+
+                        if (center && doc[center] <= 0) {
+                            center = (center == 'cg') ? 'sam' : 'cg';
+                        } else if (center == null) {
+                            center = 'cg';
+                        }
+                            
+                        stmt = db.prepare('UPDATE supervisor_hours SET ' + center + ' = ' + center + ' - 1 WHERE day=$day AND hour=$hour');
+                        stmt.run({
+                            $day: day,
+                            $hour: t
+                        });
+                    });
                 }
 
                 res.json({error: null});

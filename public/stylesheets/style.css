@@ -26,3 +26,12 @@
     font-size: 2em;
     font-weight: bold;
 }
+
+.form-inline .form-group {
+    width: 45%;
+    margin: 1em 2%;
+}
+
+.form-inline .form-group input {
+    width: 100%;
+}

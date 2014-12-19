@@ -20,6 +20,10 @@ block content
                     label.btn.btn-primary
                         input(type='radio', name='shift', id='#{id}', value='#{id}')
                         |&nbsp;#{shift}
+    h2 Assumptions
+    ul
+        li We can schedule someone to have a shift that is covered partially by CG and partially by Samaritans
+        li We have enough shifts for everyone...
 
     .notifier.bg-info(style='display:none')
         p You've selected this shift: <span></span>
@@ -43,4 +47,4 @@ block content
                     p We have received your request for:
                     h2 <span></span>
                     p We will be in touch to confirm.
-        
+

@@ -6,8 +6,8 @@ var csvParser = require('csv-parse');
 
 var db;
 var shiftTime = 4;
-var shiftTimes = [7,8,9,10,11,12,1];
-var allTimes = [7,8,9,10,11,12,1,2,3,4,5];
+var shiftTimes = [6,7,8,9,10,11,12,1];
+var allTimes = [6,7,8,9,10,11,12,1,2,3,4,5];
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -42,7 +42,7 @@ router.post('/', function (req, res) {
                         } else if (center == null) {
                             center = 'cg';
                         }
-                            
+
                         stmt = db.prepare('UPDATE supervisor_hours SET ' + center + ' = ' + center + ' - 1 WHERE day=$day AND hour=$hour');
                         stmt.run({
                             $day: day,
@@ -93,6 +93,7 @@ function initialize() {
         var fileData = fs.readFileSync('./data/supervisors.csv', {encoding: 'ASCII'});
         csvParser(fileData, function (err, data) {
             for (var i = 1; i < data.length; i++) {
+                console.log(data[i][0]);
                 if (data[i][1] == '') data[i][1] = 0;
                 if (data[i][2] == '') data[i][2] = 0;
 

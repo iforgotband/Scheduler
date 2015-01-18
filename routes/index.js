@@ -11,7 +11,12 @@ var allTimes = [6,7,8,9,10,11,12,1,2,3,4,5];
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('index', { title: 'CTL Scheduler', shifts: shiftTimes, days: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] });
+    var now = new Date().getTime();
+    if (now > 1421618400000) {
+        res.render('time');
+    } else {
+        res.render('index', { title: 'CTL Scheduler', shifts: shiftTimes, days: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] });
+    }
 });
 
 router.post('/', function (req, res) {

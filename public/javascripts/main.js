@@ -25,7 +25,7 @@ String.prototype.ucfirst = function () {
 };
 
 checkShifts();
-setInterval(checkShifts, 5000);
+setInterval(checkShifts, 1000);
 
 var currentShift;
 

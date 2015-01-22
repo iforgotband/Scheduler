@@ -35,3 +35,13 @@
 .form-inline .form-group input {
     width: 100%;
 }
+
+.form-group.full {
+    width: 95%;
+}
+
+.day {
+    width: 14.25%;
+    float: left;
+    padding: 5px;
+}

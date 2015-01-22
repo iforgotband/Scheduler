@@ -3,30 +3,31 @@ extends layout
 block content
     h1= title
 
-        h2 Key
+    h2 All shifts are listed in Eastern time
+    ul
+        li Central time: subtract 1 hour
+        li Mountain time: subtract 2 hours
+        li Pacific time: subtract 3 hours
+        li Alaska time: subtract 4 hours
+        li Hawaii: subtract 6 hours
+
+    h2 Key
     button.btn.btn-primary Available shift
     |&nbsp;
     button.btn.btn-warning Only 1 more shift available at this time
     |&nbsp;
     button.btn.disabled.btn-danger This shift is no longer available
 
-    h2 Shifts listed start at 6pm and end at 5am. A 1-5 shift is 1am to 5am.
-    h2 All shifts are EST.
-
     .row.days
         each day in days
-            .col-lg-1.col-md-2.col-sm-2.col-xs-4
+            .day
                 h2= day
                 each shift in shifts
                     - id = day + shift
-                    - shift = shift + ' - ' + ((shift + 4 > 12) ? shift - 8 : shift + 4)
+                    - shift = shift + ' - ' + ((shift + 4 > 23) ? shift - 20 : shift + 4)
                     label.btn.btn-primary
                         input(type='radio', name='shift', id='#{id}', value='#{id}')
-                        |&nbsp;#{shift}
-    h2 More info...
-    ul
-        li The next round of shift selection is 1/22 from 9pm to 11pm EST.
-        li We will open up more daytime shifts during this time.
+                        |<span>#{shift}</span>
 
     .notifier.bg-info(style='display:none')
         p You've selected this shift: <span></span>
@@ -37,6 +38,10 @@ block content
             .form-group
                 label.sr-only(for="last_name") Last Name
                 input.form-control(type="text", id="last_name", placeholder="Last Name")
+                label.sr-only
+            .form-group.full
+                label.sr-only(for="email") Email
+                input.form-control(type="text", id="email", placeholder="Email")
                 label.sr-only
 
         button.btn.btn-primary.submit Submit

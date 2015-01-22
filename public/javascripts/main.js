@@ -29,7 +29,22 @@ setInterval(checkShifts, 1000);
 
 var currentShift;
 
-$('.days input').change(function () {
+function convertTo12(time) {
+    if (time > 12) {
+        time = (time - 12) + 'pm';
+    } else {
+        time = time + 'am';
+    }
+
+    if (time == '0am') {
+        time = '12am';
+    }
+
+    return time;
+}
+
+$('.days input').
+    change(function () {
     if ($(this).is(':checked')) {
         $('.notifier').show();
         $('.active').removeClass('active');
@@ -41,23 +56,50 @@ $('.days input').change(function () {
         currentShift = null;
         $('.notifier').hide();
     }
-});
+    }).each(function () {
+        var $l = $(this).siblings('span');
+        var times = $l.text().split(' - ');
+
+        nextDay = false;
+        if (times[0] > 12 && times[1] < 12) {
+            nextDay = true;
+        }
+
+        times[0] = convertTo12(times[0]);
+        times[1] = convertTo12(times[1]);
+
+        if (nextDay) {
+            times[1] = times[1] + ' the <br /> next morning';
+        }
+
+        $l.html('&nbsp;' + times.join(' - '));
+    })
+;
 
 $('button.submit').click(function () {
+    var email = $.trim($('#email').val());
+
     if ($('#first_name').val() == '' || $('#last_name').val() == '') {
         alert('Please fill in your first and last name.');
         $('#first_name').focus();
         return;
     }
 
+    if (email == '') {
+        alert('Please fill in your email.');
+        $('#email').focus();
+        return;
+    }
+
     var $btn = $(this);
     $btn.prop('disabled', true).text('Submitting...');
     $.post('/', {
-        first_name: $('#first_name').val(),
-        last_name: $('#last_name').val(),
+        first_name: $.trim($('#first_name').val()),
+        last_name: $.trim($('#last_name').val()),
+        email: email,
         shift: $('input[name="shift"]:checked').val()
     }, function (data) {
-        if (data.error == null) {
+        if (data.error == false) {
             $('.modal').modal({backdrop: 'static'});
             $('.modal span').text(currentShift);
         } else {
@@ -67,3 +109,4 @@ $('button.submit').click(function () {
         }
     });
 });
+

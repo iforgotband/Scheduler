@@ -7,7 +7,11 @@ var bodyParser = require('body-parser');
 
 var fs = require("fs");
 var file = "shifts.db";
-var exists = fs.existsSync(file);
+
+// this existing is evident when we try to read it
+// exists can easily return true for a file, and
+// become wrong in the interrum.
+// var exists = fs.existsSync(file);
 
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database(file);
